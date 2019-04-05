@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    // We need to keep track of the colliders in case the player loses.
+    // We need to keep track of the colliders
+    // in case the player loses.
     private Collider2D[] _colliders;
-    private  void Awake()
+
+    private void Awake()
     {
-         // This line retrieves the collider of the parent and its children.
+        // This line retrieves the collider of the parent and its children.
         _colliders = GetComponentsInChildren<Collider2D>();
     }
 
@@ -17,7 +19,7 @@ public class Pipe : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // This function will disable all collisions for this pipe
+    // This function will disable all collisions for this pipe.
     public void Disable()
     {
         foreach (Collider2D c in _colliders) c.enabled = false;

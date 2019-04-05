@@ -4,36 +4,48 @@ using UnityEngine;
 
 public class PipeManager : MonoBehaviour
 {
+    // This is the template we're spawning from.
     public Pipe pipePrefab;
 
-    // The minimum and maximum height to spawn the pipes
+    // The minimum height to spawn the pipe.
     public float minY = 0f;
+
+    // The maximum height to spawn the pipe.
     public float maxY = 10f;
-    
+
     // Pipes will be spawned with a delay in between.
     public float spawnInterval = 1f;
 
-    // TESTING: REMOVE FUNCTION LATER
-    private void Start()
+    // This method will handle the pipe spawning
+    public void Spawn()
     {
         StartCoroutine(SpawnPipes());
     }
 
-    private IEnumerator SpawnPipes()
+    // Will disable the colliders on all the pipes in the scene
+    public void Disable()
     {
-        while (true)
+        Pipe[] pipes = FindObjectsOfType<Pipe>();
+        foreach (Pipe p in pipes) p.Disable();
+    }
+
+    private IEnumerator SpawnPipes()
+    {   
+        // Only spawn pipes when the game is playing.
+        while (GameManager.state == GameState.Game)
         {
-            // Create a variable containing the spwan point position.
+            // Create a variable containing the spawn point position.
             Vector3 pos = transform.position;
 
-            // Move the point to fit the range we've established
+            // Move the point to fit the range we've established.
             pos.y = Random.Range(minY, maxY);
 
-            // Create a copy of the pipe
+            // Create a copy of the pipe.
             Instantiate<Pipe>(pipePrefab, pos, Quaternion.identity);
 
-            // Delay the function by an amount of time so we don't break the game
-            yield return new WaitForSeconds(spawnInterval); 
+            // Delay the function by an amount of time,
+            // so we don't break the game.
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 }

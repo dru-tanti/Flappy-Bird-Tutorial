@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CameraScroller : MonoBehaviour
 {
-    [Tooltip("The speed the scene will move at.")]
+    [Tooltip("The speed by which the scene will move.")]
     public float speed = 15f;
 
     // Move the camera consistently to the right.
-    private void Update() 
+    private void Update()
     {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);    
+        if (GameManager.state == GameState.GameOverScreen) return;
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 }
